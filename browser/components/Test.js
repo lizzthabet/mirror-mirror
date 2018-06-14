@@ -9,35 +9,41 @@ const Test = class Test extends Component {
 			xCoord: 0
 		}
 		this.displayRectangle = this.displayRectangle.bind(this)
+		this.stopTracking = this.stopTracking.bind(this)
+		this.resumeTracking = this.resumeTracking.bind(this)
 	}
 	componentDidMount(){
 		const video = document.getElementById('video')
 		const canvas = document.getElementById('canvas')
 		const context = canvas.getContext('2d')
 
-		const faceTracker = this.initializeTracker('face')
+		const [ faceTracker, faceTask ] = this.initializeTracker('face')
 		this.addEventListener(faceTracker, this.displayRectangle, canvas, context, '#a64ceb', 'face')
+		this.faceTask = faceTask
 
-		const eyeTracker = this.initializeTracker('eye')
+		const [ eyeTracker, eyeTask ] = this.initializeTracker('eye')
 		this.addEventListener(eyeTracker, this.displayRectangle, canvas, context, '#4682B4', 'eye')
+		this.eyeTask = eyeTask
 
-		const mouthTracker = this.initializeTracker('mouth')
+		const [ mouthTracker, mouthTask ] = this.initializeTracker('mouth')
 		this.addEventListener(mouthTracker, this.displayRectangle, canvas, context, '#eeee0a', 'mouth')
+		this.mouthTask = mouthTask
 	}
 	initializeTracker(type){
 		// creating a tracker
 		const tracker = new tracking.ObjectTracker(type)
 		// set the tracker's settings
-		this.setTrackerSettings(tracker)
-		// link video with the tracker
-		tracking.track('#video', tracker, { camera: true })
+		this.setTrackerSettings(tracker, type)
+		// link video with the tracker, this trackerTask can be stopped or run again
+		const trackerTask = tracking.track('#video', tracker, { camera: true })
 		// returns the new tracker
-		return tracker
+		return [ tracker, trackerTask ]
 	}
 	// look at the docs to see what these actually do...
-	setTrackerSettings(tracker){
-		tracker.setInitialScale(4)
-		tracker.setStepSize(2)
+	setTrackerSettings(tracker, type){
+		if (type === 'face') tracker.setInitialScale(4)
+		else tracker.setInitialScale(2)
+		tracker.setStepSize(1.7)
 		tracker.setEdgesDensity(0.1)
 	}
 	// this function expects to receive a tracker and an action
@@ -55,12 +61,24 @@ const Test = class Test extends Component {
 			if (type === 'face') self.setState({ xCoord: rect.x })
 		})
 	}
+	stopTracking(){
+		this.faceTask.stop()
+		this.mouthTask.stop()
+		this.eyeTask.stop()
+	}
+	resumeTracking(){
+		this.faceTask.run()
+		this.mouthTask.run()
+		this.eyeTask.run()
+	}
 	render() {
 		return (
 			<section>
 				<video id='video' width='420' height='340' preload='true' autoPlay loop muted />
-				<canvas id='canvas' width='420' height='340'></canvas>
-				<h1>face x coordinate: {this.state.xCoord}</h1>
+				<canvas id='canvas' width='420' height='340' />
+				<h1>face x coordinate: { this.state.xCoord }</h1>
+				<button type='button' onClick={ this.stopTracking }>freeze frame</button>
+				<button type='button' onClick={ this.resumeTracking }>resume</button>
 			</section>
 		)
 	}
