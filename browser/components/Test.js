@@ -8,25 +8,22 @@ const Test = class Test extends Component {
 		this.state = {
 			xCoord: 0
 		}
+		this.canvas = React.createRef()
 		this.displayRectangle = this.displayRectangle.bind(this)
 		this.stopTracking = this.stopTracking.bind(this)
 		this.resumeTracking = this.resumeTracking.bind(this)
 	}
 	componentDidMount(){
-		const video = document.getElementById('video')
-		const canvas = document.getElementById('canvas')
-		const context = canvas.getContext('2d')
-
 		const [ faceTracker, faceTask ] = this.initializeTracker('face')
-		this.addEventListener(faceTracker, this.displayRectangle, canvas, context, '#a64ceb', 'face')
+		this.addEventListener(faceTracker, this.displayRectangle, '#a64ceb', 'face')
 		this.faceTask = faceTask
 
 		const [ eyeTracker, eyeTask ] = this.initializeTracker('eye')
-		this.addEventListener(eyeTracker, this.displayRectangle, canvas, context, '#4682B4', 'eye')
+		this.addEventListener(eyeTracker, this.displayRectangle, '#4682B4', 'eye')
 		this.eyeTask = eyeTask
 
 		const [ mouthTracker, mouthTask ] = this.initializeTracker('mouth')
-		this.addEventListener(mouthTracker, this.displayRectangle, canvas, context, '#eeee0a', 'mouth')
+		this.addEventListener(mouthTracker, this.displayRectangle, '#eeee0a', 'mouth')
 		this.mouthTask = mouthTask
 	}
 	initializeTracker(type){
@@ -51,8 +48,9 @@ const Test = class Test extends Component {
 		// the action will be invoked with any options passed into it when the `track` event is emitted
 		tracker.on('track', event => action(event, ...options))
 	}
-	displayRectangle(event, canvas, context, color = '#a64ceb', type){
+	displayRectangle(event, color = '#a64ceb', type){
 		const self = this
+		const context = self.canvas.current.getContext('2d')
 		// context.clearRect(0, 0, canvas.width, canvas.height) // clears the rectangle each time
 		event.data.forEach((rect) => {
 			context.strokeStyle = color
@@ -74,8 +72,8 @@ const Test = class Test extends Component {
 	render() {
 		return (
 			<section>
-				<video id='video' width='420' height='340' preload='true' autoPlay loop muted />
-				<canvas id='canvas' width='420' height='340' />
+				<video id='video' ref={ this.video } width='420' height='340' preload='true' autoPlay loop muted />
+				<canvas ref={ this.canvas } width='420' height='340' />
 				<h1>face x coordinate: { this.state.xCoord }</h1>
 				<button type='button' onClick={ this.stopTracking }>freeze frame</button>
 				<button type='button' onClick={ this.resumeTracking }>resume</button>
