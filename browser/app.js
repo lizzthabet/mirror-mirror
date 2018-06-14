@@ -1,12 +1,11 @@
-import React from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import store from './store'
-import './styles/main.css'
+import Test from './components/Test'
 
-ReactDOM.render(
-	<Provider store = { store }>
-		<div>Hello, world!</div>
-	</Provider>,
-	document.getElementById('app')
-)
+const App = () => {
+	return (
+		<Test />
+	)
+}
+
+export default App
