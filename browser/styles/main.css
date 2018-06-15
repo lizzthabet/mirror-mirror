@@ -1,1 +1,23 @@
+body {
+	margin: 0;
+	padding: 0;
+}
 
+.video-cam {
+	height: 340px;
+	opacity: 0.3;
+	width: 420px;
+	z-index: 2;
+}
+
+.canvas {
+	/* position: fixed; */
+	position: absolute;
+	top: 0;
+	z-index: -1;
+}
+
+.canvas__stacked {
+	margin-top: 50vh;
+	border: 1px solid blue;
+}

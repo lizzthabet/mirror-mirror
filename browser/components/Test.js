@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import Sketch from './Sketch'
+import { seed as seedCube } from './seedCube'
+import { seed as seedGradient } from './seedGradient'
 const tracking = window.tracking // tracking is placed on the window object
 
 const Test = class Test extends Component {
@@ -36,11 +39,10 @@ const Test = class Test extends Component {
 		// returns the new tracker
 		return [ tracker, trackerTask ]
 	}
-	// look at the docs to see what these actually do...
 	setTrackerSettings(tracker, type){
 		if (type === 'face') tracker.setInitialScale(4)
 		else tracker.setInitialScale(2)
-		tracker.setStepSize(1.7)
+		tracker.setStepSize(3)
 		tracker.setEdgesDensity(0.1)
 	}
 	// this function expects to receive a tracker and an action
@@ -50,11 +52,11 @@ const Test = class Test extends Component {
 	}
 	displayRectangle(event, color = '#a64ceb', type){
 		const self = this
-		const context = self.canvas.current.getContext('2d')
+		// const context = self.canvas.current.getContext('2d')
 		// context.clearRect(0, 0, canvas.width, canvas.height) // clears the rectangle each time
 		event.data.forEach((rect) => {
-			context.strokeStyle = color
-			context.strokeRect(rect.x, rect.y, rect.width, rect.height)
+			// context.strokeStyle = color
+			// context.strokeRect(rect.x, rect.y, rect.width, rect.height)
 			console.log(rect.x, rect.y, rect.width, rect.height, type)
 			if (type === 'face') self.setState({ xCoord: rect.x })
 		})
@@ -72,11 +74,15 @@ const Test = class Test extends Component {
 	render() {
 		return (
 			<section>
-				<video id='video' ref={ this.video } width='420' height='340' preload='true' autoPlay loop muted />
-				<canvas ref={ this.canvas } width='420' height='340' />
+				{/*Break video into separate component that changes this app's state*/}
+				<video id='video' ref={ this.video } preload='true' autoPlay loop muted className='video-cam' />
+				<Sketch sketch={ seedCube } rotation={ this.state.xCoord } className='canvas' />
+				{/*Add parameters to props*/}
+				{/*<canvas ref={ this.canvas } width='420' height='340' />*/}
 				<h1>face x coordinate: { this.state.xCoord }</h1>
 				<button type='button' onClick={ this.stopTracking }>freeze frame</button>
 				<button type='button' onClick={ this.resumeTracking }>resume</button>
+				{/*<Sketch sketch={ seedGradient } className='canvas__stacked' />*/}
 			</section>
 		)
 	}
