@@ -49,10 +49,10 @@ export const seed = sketch => {
 		sketch.setGradient(
 			(-sketch.width / 2), // x position
 			gradientY, // never touch
-			sketch.width / 3, // width
+			sketch.width * (2 / 3), // width
 			gradientH, // never touch
 			peach,
-			orange,
+			green,
 			X_AXIS
 		)
 		// middle
