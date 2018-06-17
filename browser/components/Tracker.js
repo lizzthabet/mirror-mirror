@@ -112,10 +112,8 @@ const Tracker = class Tracker extends Component {
 				<Message faceMessage={ this.state.faceMessage } mouthMessage={ this.state.mouthMessage } eyeMessage={ this.state.eyeMessage } />
 
 				{/* DEV TOOLS */}
-				<h1>face x coordinate: { this.state.face }, { this.state.faceMessage.toString() }</h1>
 				<button type='button' onClick={ this.stopTracking }>freeze frame</button>
 				<button type='button' onClick={ this.resumeTracking }>resume</button>
-				<button type='button' onClick={ () => this.displayMessage('face', true) }>display face message</button>
 			</section>
 		)
 	}
