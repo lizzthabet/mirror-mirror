@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import Test from './components/Test'
+import Tracker from './components/Tracker'
 
 const App = () => {
 	return (
-		<Test />
+		<Tracker />
 	)
 }
 

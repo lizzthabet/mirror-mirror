@@ -6,7 +6,7 @@ import { seed as seedGradient } from './seedGradient'
 import Message from './Message'
 const tracking = window.tracking // tracking is placed on the window object
 
-const Test = class Test extends Component {
+const Tracker = class Tracker extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -17,10 +17,10 @@ const Test = class Test extends Component {
 			faceMessage: false,
 			eye: 0,
 			eyeTime: new Date(),
-			eyeMessage: true,
+			eyeMessage: false,
 			mouth: 0,
 			mouthTime: new Date(),
-			mouthMessage: true
+			mouthMessage: false
 		}
 		this.canvas = React.createRef()
 		this.setDataToState = this.setDataToState.bind(this)
@@ -110,4 +110,4 @@ const Test = class Test extends Component {
 	}
 }
 
-export default Test
+export default Tracker
