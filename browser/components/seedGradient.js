@@ -32,11 +32,22 @@ export const seed = sketch => {
 
 	sketch.reactToProps = props => {
 		// reassign the variables defined in the upper scope based on props
-		if (props.middleWidth) middleWidth = (props.middleWidth % 10)
+		if (props.faceX) middleWidth = (props.faceX % 10)
 	}
 
 	// draw your sketch
 	sketch.draw = () => {
+
+		// bg
+		sketch.setGradient(
+			-sketch.width, // x position
+			gradientY, // never touch
+			sketch.width * 2, // width
+			gradientH, // never touch
+			peach,
+			purple,
+			X_AXIS
+		)
 
 		// right
 		sketch.setGradient(
@@ -74,8 +85,6 @@ export const seed = sketch => {
 
 	// if you end up with separate canvases, refactor this setGradient function
 	sketch.setGradient = (x, y, w, h, c1, c2, axis) => {
-		// sketch.noFill()
-
 		if (axis === Y_AXIS) {
 			// Top to bottom gradient
 			for (let i = y; i <= y + h; i++) {
