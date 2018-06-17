@@ -1,5 +1,4 @@
 body {
-	font-family: 'VT323', monospace;
 	margin: 0;
 	padding: 0;
 }
@@ -34,6 +33,7 @@ body {
 
 .message__heading {
 	color: rgba(232, 141, 144);
+	content: attr(data-visibility);
 	font-size: 6rem;
 	margin: 45px;
 	text-shadow: 0px 0px 18px rgba(0,0,0,0.4);
@@ -41,14 +41,8 @@ body {
 
 .message__heading[data-visibility*] {
 	display: block;
-	transition: all 0.5s ease;
-}
-
-.message__heading[data-visibility="true"] {
-	transition: all 0.5s ease;
 }
 
 .message__heading[data-visibility="false"] {
 	display: none;
-	transition: all 0.5s ease;
 }
