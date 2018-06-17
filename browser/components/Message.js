@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom'
 const Message = function(props) {
 	return (
 		<section className='message'>
-			<h1 className='message__heading' data-visibility={ props.faceMessage }>Face me</h1>
+			<h1 className='message__heading' data-visibility={ props.faceMessage }>Where are you?</h1>
 			<h1 className='message__heading' data-visibility={ props.mouthMessage }>Open wide</h1>
 			<h1 className='message__heading' data-visibility={ props.eyeMessage }>I can't see your eyes</h1>
 		</section>

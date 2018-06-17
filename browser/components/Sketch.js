@@ -41,13 +41,3 @@ export default class Sketch extends Component {
 		return <section className={ this.props.className } ref={ this.sketch } />
 	}
 }
-
-// FAILED INTERVAL CODE -- IGNORE ME
-// let faceInterval
-// if (this.props.faceX === nextProps.faceX) {
-// 	faceInterval = setInterval(() => {
-// 		console.log('WHERE IS YOUR FACE??? new')
-// 	}, 5000)
-// }
-//
-// if (this.props.faceX !== nextProps.faceX) clearInterval(faceInterval)

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import Sketch from './Sketch'
-import { seed as seedCube } from './seedCube'
 import { seed as seedGradient } from './seedGradient'
 import Message from './Message'
 const tracking = window.tracking // tracking is placed on the window object
@@ -66,7 +65,6 @@ const Tracker = class Tracker extends Component {
 
 		event.data.forEach((rect) => {
 			let data = [ rect.x, rect.y, rect.width, rect.height ]
-			console.log(data, type)
 			if (type === 'face') self.setState({ face: data, faceTime: new Date() })
 			else if (type === 'eye') self.setState({ eye: data, eyeTime: new Date() })
 			else if (type === 'mouth') self.setState({ mouth: data, mouthTime: new Date() })
@@ -107,10 +105,6 @@ const Tracker = class Tracker extends Component {
 					className='canvas' />
 
 				<Message faceMessage={ this.state.faceMessage } mouthMessage={ this.state.mouthMessage } eyeMessage={ this.state.eyeMessage } />
-
-				{/* DEV TOOLS */}
-				<button type='button' onClick={ this.stopTracking }>freeze frame</button>
-				<button type='button' onClick={ this.resumeTracking }>resume</button>
 			</section>
 		)
 	}

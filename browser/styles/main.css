@@ -5,7 +5,7 @@ body {
 
 .video-cam {
 	height: 340px;
-	opacity: 0.3;
+	opacity: 0;
 	width: 420px;
 	z-index: 2;
 }
