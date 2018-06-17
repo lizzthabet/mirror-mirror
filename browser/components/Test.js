@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import Sketch from './Sketch'
 import { seed as seedCube } from './seedCube'
 import { seed as seedGradient } from './seedGradient'
+import Message from './Message'
 const tracking = window.tracking // tracking is placed on the window object
 
 const Test = class Test extends Component {
@@ -16,10 +17,10 @@ const Test = class Test extends Component {
 			faceMessage: false,
 			eye: 0,
 			eyeTime: new Date(),
-			eyeMessage: false,
+			eyeMessage: true,
 			mouth: 0,
 			mouthTime: new Date(),
-			mouthMessage: false
+			mouthMessage: true
 		}
 		this.canvas = React.createRef()
 		this.setDataToState = this.setDataToState.bind(this)
@@ -103,6 +104,7 @@ const Test = class Test extends Component {
 				<button type='button' onClick={ this.stopTracking }>freeze frame</button>
 				<button type='button' onClick={ this.resumeTracking }>resume</button>
 				<button type='button' onClick={ () => this.displayMessage('face', true) }>display face message</button>
+				<Message faceMessage={ this.state.faceMessage } mouthMessage={ this.state.mouthMessage } eyeMessage={ this.state.eyeMessage } />
 			</section>
 		)
 	}
