@@ -50,7 +50,7 @@ const Tracker = class Tracker extends Component {
 		return [ tracker, trackerTask ]
 	}
 	setTrackerSettings(tracker, type){
-		if (type === 'face') tracker.setInitialScale(4)
+		if (type === 'face') tracker.setInitialScale(6)
 		else tracker.setInitialScale(2)
 		tracker.setStepSize(1.7)
 		tracker.setEdgesDensity(0.1)
