@@ -97,6 +97,7 @@ const Tracker = class Tracker extends Component {
 		return (
 			<section>
 				<video id='video' ref={ this.video } preload='true' autoPlay loop muted className='video-cam' />
+
 				<Sketch
 					sketch={ seedGradient }
 					face={ this.state.face }
@@ -107,11 +108,14 @@ const Tracker = class Tracker extends Component {
 					eyeTime={ this.state.eyeTime }
 					displayMessage={ this.displayMessage }
 					className='canvas' />
+
+				<Message faceMessage={ this.state.faceMessage } mouthMessage={ this.state.mouthMessage } eyeMessage={ this.state.eyeMessage } />
+
+				{/* DEV TOOLS */}
 				<h1>face x coordinate: { this.state.face }, { this.state.faceMessage.toString() }</h1>
 				<button type='button' onClick={ this.stopTracking }>freeze frame</button>
 				<button type='button' onClick={ this.resumeTracking }>resume</button>
 				<button type='button' onClick={ () => this.displayMessage('face', true) }>display face message</button>
-				<Message faceMessage={ this.state.faceMessage } mouthMessage={ this.state.mouthMessage } eyeMessage={ this.state.eyeMessage } />
 			</section>
 		)
 	}

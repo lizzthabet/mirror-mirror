@@ -17,18 +17,20 @@ export default class Sketch extends Component {
 		// if there's a reactToProps function, invoke it. This will cause the variables to update in the canvas
 		if (this.canvas.reactToProps) this.canvas.reactToProps(nextProps)
 
-		// placeholder test for when data gets old
-		let diff = new Date() - this.props.timeX
-		if (diff > 5000) console.log(diff.toString(), true)
-		// logic will look something like...
-		// if the difference between now and faceTime > 5000, then invoke `this.props.displayMessage()` with the correct type and false
-		// ELSE if the difference is less than or equal to 5000, then invoke this.props.displayMessage with the correct type and true
+		let now = new Date()
+		if (now - this.props.faceTime > 5000) this.props.displayMessage('face', true)
+		else this.props.displayMessage('face', false)
+		if (now - this.props.mouthTime > 8000) this.props.displayMessage('mouth', true)
+		else this.props.displayMessage('mouth', false)
+		if (now - this.props.eyeTime > 2000) this.props.displayMessage('eye', true)
+		else this.props.displayMessage('eye', false)
 
 		// if there is a new sketch function, remove the current sketch and create a new one
 		// these lines don't affect basic responsive functionality of my setup
 		if (this.props.sketch !== nextProps.sketch) {
 			this.sketch.removeChild(this.sketch.childNodes[0])
 			this.canvas = new p5(nextProps.sketch, this.sketch)
+			return true
 		}
 		return false
 	}
