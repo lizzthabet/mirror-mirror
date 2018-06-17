@@ -9,24 +9,35 @@ const Test = class Test extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			xCoord: 0
+			xCoord: 0,
+			timeXCoord: new Date(),
+			face: 0,
+			faceTime: new Date(),
+			faceMessage: false,
+			eye: 0,
+			eyeTime: new Date(),
+			eyeMessage: false,
+			mouth: 0,
+			mouthTime: new Date(),
+			mouthMessage: false
 		}
 		this.canvas = React.createRef()
-		this.displayRectangle = this.displayRectangle.bind(this)
+		this.setDataToState = this.setDataToState.bind(this)
+		this.displayMessage = this.displayMessage.bind(this)
 		this.stopTracking = this.stopTracking.bind(this)
 		this.resumeTracking = this.resumeTracking.bind(this)
 	}
 	componentDidMount(){
 		const [ faceTracker, faceTask ] = this.initializeTracker('face')
-		this.addEventListener(faceTracker, this.displayRectangle, '#a64ceb', 'face')
+		this.addEventListener(faceTracker, this.setDataToState, 'face')
 		this.faceTask = faceTask
 
 		const [ eyeTracker, eyeTask ] = this.initializeTracker('eye')
-		this.addEventListener(eyeTracker, this.displayRectangle, '#4682B4', 'eye')
+		this.addEventListener(eyeTracker, this.setDataToState, 'eye')
 		this.eyeTask = eyeTask
 
 		const [ mouthTracker, mouthTask ] = this.initializeTracker('mouth')
-		this.addEventListener(mouthTracker, this.displayRectangle, '#eeee0a', 'mouth')
+		this.addEventListener(mouthTracker, this.setDataToState, 'mouth')
 		this.mouthTask = mouthTask
 	}
 	initializeTracker(type){
@@ -47,19 +58,31 @@ const Test = class Test extends Component {
 	}
 	// this function expects to receive a tracker and an action
 	addEventListener(tracker, action, ...options){
-		// the action will be invoked with any options passed into it when the `track` event is emitted
+		// the action will be invoked with any options
+		// passed into it when the `track` event is emitted
 		tracker.on('track', event => action(event, ...options))
 	}
-	displayRectangle(event, color = '#a64ceb', type){
+	setDataToState(event, type){
 		const self = this
-		// const context = self.canvas.current.getContext('2d')
-		// context.clearRect(0, 0, canvas.width, canvas.height) // clears the rectangle each time
+
 		event.data.forEach((rect) => {
-			// context.strokeStyle = color
-			// context.strokeRect(rect.x, rect.y, rect.width, rect.height)
-			console.log(rect.x, rect.y, rect.width, rect.height, type)
-			if (type === 'face') self.setState({ xCoord: rect.x })
+			let data = [ rect.x, rect.y, rect.width, rect.height ]
+			console.log(data, type)
+			if (type === 'face') self.setState({ face: data, faceTime: new Date() })
+			else if (type === 'eye') self.setState({ eye: data, eyeTime: new Date() })
+			else if (type === 'mouth') self.setState({ mouth: data, mouthTime: new Date() })
+
+			// old test
+			if (type === 'face') self.setState({ xCoord: rect.x, timeXCoord: new Date() })
 		})
+	}
+	// a message is toggled on/off when a tracker doesn't log data for a period of time
+	// the time calculation is done the Sketch component and passed up to this component
+	displayMessage(type, display){
+		let message = `${type}Message`
+		if (type === 'face' && this.state[message] !== display) return this.setState({ faceMessage: display })
+		else if (type === 'mouth' && this.state[message] !== display) return this.setState({ mouthMessage: display })
+		else if (type === 'eye' && this.state[message] !== display) return this.setState({ eyeMessage: display })
 	}
 	stopTracking(){
 		this.faceTask.stop()
@@ -74,15 +97,12 @@ const Test = class Test extends Component {
 	render() {
 		return (
 			<section>
-				{/*Break video into separate component that changes this app's state*/}
 				<video id='video' ref={ this.video } preload='true' autoPlay loop muted className='video-cam' />
-				<Sketch sketch={ seedGradient } middleWidth={ this.state.xCoord } className='canvas' />
-				{/*Add parameters to props*/}
-				{/*<canvas ref={ this.canvas } width='420' height='340' />*/}
-				<h1>face x coordinate: { this.state.xCoord }</h1>
+				<Sketch sketch={ seedGradient } faceX={ this.state.xCoord } timeX={ this.state.timeXCoord } displayMessage={ this.displayMessage } className='canvas' />
+				<h1>face x coordinate: { this.state.face }, { this.state.faceMessage.toString() }</h1>
 				<button type='button' onClick={ this.stopTracking }>freeze frame</button>
 				<button type='button' onClick={ this.resumeTracking }>resume</button>
-				{/*<Sketch sketch={ seedGradient } className='canvas__stacked' />*/}
+				<button type='button' onClick={ () => this.displayMessage('face', true) }>display face message</button>
 			</section>
 		)
 	}
