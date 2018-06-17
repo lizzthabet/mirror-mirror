@@ -52,7 +52,7 @@ const Tracker = class Tracker extends Component {
 	setTrackerSettings(tracker, type){
 		if (type === 'face') tracker.setInitialScale(4)
 		else tracker.setInitialScale(2)
-		tracker.setStepSize(3)
+		tracker.setStepSize(1.7)
 		tracker.setEdgesDensity(0.1)
 	}
 	// this function expects to receive a tracker and an action
@@ -70,9 +70,6 @@ const Tracker = class Tracker extends Component {
 			if (type === 'face') self.setState({ face: data, faceTime: new Date() })
 			else if (type === 'eye') self.setState({ eye: data, eyeTime: new Date() })
 			else if (type === 'mouth') self.setState({ mouth: data, mouthTime: new Date() })
-
-			// old test
-			if (type === 'face') self.setState({ xCoord: rect.x, timeXCoord: new Date() })
 		})
 	}
 	// a message is toggled on/off when a tracker doesn't log data for a period of time
