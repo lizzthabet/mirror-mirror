@@ -1,16 +1,19 @@
 /* eslint max-params: 0, id-length: 0 */
 
+import { translateProportions, findNewCenter } from './trackerTransforms'
+
 export const seed = sketch => {
 	const Y_AXIS = 1
 	const X_AXIS = 2
 
 	// declare colors and sizes
 	let white, blue, peach, green, orange, purple
+
 	// these values will never change for each gradient that's generated, but they need to be defined after the sketch is setup
-	let gradientH, gradientY
+	let sketchHeight, sketchTop
 
 	// define default variables for anything that will change based on props
-	let middleWidth = 3
+	let middleNewCenter, middleEdge1, middleEdge2, middleWidth
 
 	// create the canvas
 	sketch.setup = () => {
@@ -26,13 +29,26 @@ export const seed = sketch => {
 		purple = sketch.color(170, 144, 209, 150)
 
 		// height and y position defined
-		gradientH = sketch.height
-		gradientY = (-sketch.height * 0.5)
+		sketchHeight = sketch.height
+		sketchTop = (-sketch.height * 0.5)
+
+		// defaults for load
+		middleEdge1 = 401
+		middleEdge2 = 401
+		middleWidth = sketch.width / 3
+		middleNewCenter = 0
 	}
 
 	sketch.reactToProps = props => {
 		// reassign the variables defined in the upper scope based on props
-		if (props.faceX) middleWidth = (props.faceX % 10)
+		if (props.face) {
+			let [ x, y, width, height ] = props.face
+			let newDimensions = findNewCenter(x, sketch.height)
+			middleNewCenter = newDimensions[0]
+			middleEdge1 = newDimensions[1]
+			middleEdge2 = newDimensions[2]
+			middleWidth = translateProportions(width, height, sketch.width)
+		}
 	}
 
 	// draw your sketch
@@ -41,9 +57,9 @@ export const seed = sketch => {
 		// bg
 		sketch.setGradient(
 			-sketch.width, // x position
-			gradientY, // never touch
+			sketchTop, // never touch
 			sketch.width * 2, // width
-			gradientH, // never touch
+			sketchHeight, // never touch
 			peach,
 			purple,
 			X_AXIS
@@ -52,9 +68,9 @@ export const seed = sketch => {
 		// right
 		sketch.setGradient(
 			(sketch.width / 2) / 3, // x position
-			gradientY, // never touch
+			sketchTop, // never touch
 			sketch.width / 3, // width
-			gradientH, // never touch
+			sketchHeight, // never touch
 			green,
 			purple,
 			X_AXIS
@@ -63,27 +79,38 @@ export const seed = sketch => {
 		// left
 		sketch.setGradient(
 			(-sketch.width / 2), // x position
-			gradientY, // never touch
+			sketchTop, // never touch
 			sketch.width * (2 / 3), // width
-			gradientH, // never touch
+			sketchHeight, // never touch
 			peach,
 			green,
 			X_AXIS
 		)
 
-		// middle
+		// middle top
+		let width = 500
 		sketch.setGradient(
-			(-sketch.width / 2) / 3, // x position
-			gradientY, // never touch
-			sketch.width / middleWidth, // width
-			gradientH, // never touch
+			0 - middleWidth / 2, // share the same x position
+			sketchTop, // never touch
+			middleWidth, // share the same width
+			middleEdge1, // edge1
 			white,
 			blue,
 			Y_AXIS
 		)
+
+		// middle bottom
+		sketch.setGradient(
+			0 - middleWidth / 2, // share the same x position
+			middleNewCenter, // newCenter
+			middleWidth, // share the same width
+			middleEdge2, // edge2
+			blue,
+			white,
+			Y_AXIS
+		)
 	}
 
-	// if you end up with separate canvases, refactor this setGradient function
 	sketch.setGradient = (x, y, w, h, c1, c2, axis) => {
 		if (axis === Y_AXIS) {
 			// Top to bottom gradient

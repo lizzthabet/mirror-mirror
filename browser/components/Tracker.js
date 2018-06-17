@@ -10,8 +10,6 @@ const Tracker = class Tracker extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			xCoord: 0,
-			timeXCoord: new Date(),
 			face: 0,
 			faceTime: new Date(),
 			faceMessage: false,
@@ -99,7 +97,16 @@ const Tracker = class Tracker extends Component {
 		return (
 			<section>
 				<video id='video' ref={ this.video } preload='true' autoPlay loop muted className='video-cam' />
-				<Sketch sketch={ seedGradient } faceX={ this.state.xCoord } timeX={ this.state.timeXCoord } displayMessage={ this.displayMessage } className='canvas' />
+				<Sketch
+					sketch={ seedGradient }
+					face={ this.state.face }
+					faceTime={ this.state.faceTime }
+					mouth={ this.state.mouth }
+					mouthTime={ this.state.mouthTime }
+					eye={ this.state.eye }
+					eyeTime={ this.state.eyeTime }
+					displayMessage={ this.displayMessage }
+					className='canvas' />
 				<h1>face x coordinate: { this.state.face }, { this.state.faceMessage.toString() }</h1>
 				<button type='button' onClick={ this.stopTracking }>freeze frame</button>
 				<button type='button' onClick={ this.resumeTracking }>resume</button>
