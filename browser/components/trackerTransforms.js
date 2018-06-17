@@ -1,6 +1,6 @@
 export const translateProportions = (width, height, sketchDimension) => {
 	const area = width * height
-	const videoProportion = area / (340 * 420)
+	const videoProportion = area / (340 * 420 * 0.5)
 	// this is the size of video feed which is outlined in styles
 	return sketchDimension * videoProportion
 }
@@ -18,4 +18,19 @@ export const findNewCenter = (coordinate, sketchDimension) => {
 	if (edge2 < 0) edge2 = edge2 * -1
 	// return the center point and either top/bottom or left/right dimensions
 	return [newCenter, edge1, edge2]
+}
+
+export const findNewEdge = (xCoord, width, sketchDimension) => {
+	const proportion = Math.ceil(translateProportions(xCoord, width, sketchDimension))
+	const newEdge = proportion
+	const width1 = Math.ceil(sketchDimension / 2 - newEdge)
+	const width2 = Math.ceil(sketchDimension / 2 + newEdge)
+	return [newEdge, width1, width2]
+}
+
+export const findNewColor = (x, y, w, h) => {
+	return [x, y, w, h].map(number => {
+		if (number > 255) return number % 255
+		else return number
+	})
 }
