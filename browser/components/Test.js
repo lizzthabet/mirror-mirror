@@ -76,7 +76,7 @@ const Test = class Test extends Component {
 			<section>
 				{/*Break video into separate component that changes this app's state*/}
 				<video id='video' ref={ this.video } preload='true' autoPlay loop muted className='video-cam' />
-				<Sketch sketch={ seedGradient } rotation={ this.state.xCoord } className='canvas' />
+				<Sketch sketch={ seedGradient } middleWidth={ this.state.xCoord } className='canvas' />
 				{/*Add parameters to props*/}
 				{/*<canvas ref={ this.canvas } width='420' height='340' />*/}
 				<h1>face x coordinate: { this.state.xCoord }</h1>

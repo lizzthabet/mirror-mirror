@@ -10,14 +10,15 @@ export const seed = sketch => {
 	let gradientH, gradientY
 
 	// define default variables for anything that will change based on props
+	let middleWidth = 3
 
 	// create the canvas
 	sketch.setup = () => {
 		sketch.createCanvas(window.innerWidth, window.innerHeight, sketch.WEBGL)
-		sketch.noLoop()
+		// sketch.noLoop()
 
 		// colors defined
-		white = sketch.color(255, 50)
+		white = sketch.color(150, 50)
 		blue = sketch.color(28, 139, 216, 200)
 		peach = sketch.color(232, 141, 144, 190)
 		green = sketch.color(92, 165, 101, 200)
@@ -31,10 +32,12 @@ export const seed = sketch => {
 
 	sketch.reactToProps = props => {
 		// reassign the variables defined in the upper scope based on props
+		if (props.middleWidth) middleWidth = (props.middleWidth % 10)
 	}
 
 	// draw your sketch
 	sketch.draw = () => {
+
 		// right
 		sketch.setGradient(
 			(sketch.width / 2) / 3, // x position
@@ -45,6 +48,7 @@ export const seed = sketch => {
 			purple,
 			X_AXIS
 		)
+
 		// left
 		sketch.setGradient(
 			(-sketch.width / 2), // x position
@@ -55,11 +59,12 @@ export const seed = sketch => {
 			green,
 			X_AXIS
 		)
+
 		// middle
 		sketch.setGradient(
-			(-sketch.width / 2) / 3,
+			(-sketch.width / 2) / 3, // x position
 			gradientY, // never touch
-			sketch.width / 3,
+			sketch.width / middleWidth, // width
 			gradientH, // never touch
 			white,
 			blue,
@@ -69,7 +74,7 @@ export const seed = sketch => {
 
 	// if you end up with separate canvases, refactor this setGradient function
 	sketch.setGradient = (x, y, w, h, c1, c2, axis) => {
-		sketch.noFill()
+		// sketch.noFill()
 
 		if (axis === Y_AXIS) {
 			// Top to bottom gradient
@@ -88,5 +93,6 @@ export const seed = sketch => {
 				sketch.line(i, y, i, y + h)
 			}
 		}
+
 	}
 }
