@@ -5,5 +5,5 @@ import './styles/main.css'
 
 ReactDOM.render(
 		<App />,
-	document.getElementById('app')
+	document.getElementById('mirror')
 )

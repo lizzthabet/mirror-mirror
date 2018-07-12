@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import Tracker from './components/Tracker'
+import Introduction from './components/Introduction'
 
 const App = () => {
 	return (
-		<Tracker />
+		<Introduction />
 	)
 }
 
