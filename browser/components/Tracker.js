@@ -22,8 +22,6 @@ const Tracker = class Tracker extends Component {
 		this.canvas = React.createRef()
 		this.setDataToState = this.setDataToState.bind(this)
 		this.displayMessage = this.displayMessage.bind(this)
-		this.stopTracking = this.stopTracking.bind(this)
-		this.resumeTracking = this.resumeTracking.bind(this)
 	}
 	componentDidMount(){
 		const [ faceTracker, faceTask ] = this.initializeTracker('face')
@@ -71,23 +69,14 @@ const Tracker = class Tracker extends Component {
 		})
 	}
 	// a message is toggled on/off when a tracker doesn't log data for a period of time
-	// the time calculation is done the Sketch component and passed up to this component
+	// the time calculation is done in the Sketch component and passed up to this component
 	displayMessage(type, display){
 		let message = `${type}Message`
 		if (type === 'face' && this.state[message] !== display) return this.setState({ faceMessage: display })
 		else if (type === 'mouth' && this.state[message] !== display) return this.setState({ mouthMessage: display })
 		else if (type === 'eye' && this.state[message] !== display) return this.setState({ eyeMessage: display })
 	}
-	stopTracking(){
-		this.faceTask.stop()
-		this.mouthTask.stop()
-		this.eyeTask.stop()
-	}
-	resumeTracking(){
-		this.faceTask.run()
-		this.mouthTask.run()
-		this.eyeTask.run()
-	}
+
 	render() {
 		return (
 			<section>
