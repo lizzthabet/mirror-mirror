@@ -1,7 +1,6 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 
-// other ones: Don't get any closer, Where are you?, Did you leave?, You're too close to me, I want to see you
+// Ideas: Don't get any closer, Where are you?, Did you leave?, You're too close to me, I want to see you
 
 const Message = function(props) {
 	return (
