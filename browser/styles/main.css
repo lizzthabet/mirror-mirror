@@ -46,3 +46,23 @@ body {
 .message__heading[data-visibility="false"] {
 	display: none;
 }
+
+.ReactModal__Overlay {
+	background-color: rgba(255,255,255,0.4);
+	margin: 60px;
+	position: fixed;
+	top: 0;
+	width: 600px;
+}
+
+.ReactModal__Content {
+	padding: 15px;
+}
+
+.modal__heading {
+	line-height: 1.3em;
+}
+
+.modal__text {
+	line-height: 1.4em;
+}

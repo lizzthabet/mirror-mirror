@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import Introduction from './components/Introduction'
+import Tracker from './components/Tracker'
 
 const App = () => {
 	return (
-		<Introduction />
+		<section>
+			<Introduction />
+			<Tracker />
+		</section>
 	)
 }
 
