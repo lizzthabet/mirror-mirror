@@ -1,9 +1,12 @@
 const express = require('express')
 const path = require('path')
+const httpsRedirect = require('express-https-redirect')
 
 const app = express()
 
 app.use(express.static(path.join(__dirname, '../public'))) // serve public files
+
+app.use('/', httpsRedirect()) // redirect all unsecure connections to https
 
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../public/index.html'))

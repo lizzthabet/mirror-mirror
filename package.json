@@ -12,6 +12,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"express": "^4.16.3",
+		"express-https-redirect": "^1.0.0",
 		"lodash": "^4.17.10",
 		"p5": "^0.6.1",
 		"react": "^16.4.1",
