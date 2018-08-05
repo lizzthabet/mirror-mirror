@@ -66,3 +66,22 @@ body {
 .modal__text {
 	line-height: 1.4em;
 }
+
+@media only screen and (max-width: 768px) {
+	.message__heading {
+		font-size: 3rem;
+		margin-left: 0;
+		margin-right: 0;
+	}
+	
+	.ReactModal__Overlay {
+		margin: 15px;
+		width: calc(100% - 30px);
+	}
+	
+	.modal__heading {
+		font-size: 1.8rem;
+	}
+	
+} 
+
