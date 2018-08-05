@@ -4,8 +4,7 @@ const path = require('path')
 const app = express()
 
 app.get('/', (req, res) => {
-	if (!req.secure) res.redirect(301, 'https://mirror-mirror.lizzthabet.com')
-	else res.sendFile(path.join(__dirname, '../public/index.html'))
+	res.sendFile(path.join(__dirname, '../public/index.html'))
 })
 
 app.use(express.static(path.join(__dirname, '../public'))) // serve public files
