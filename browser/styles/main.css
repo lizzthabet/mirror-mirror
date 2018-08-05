@@ -76,7 +76,7 @@ body {
 	
 	.ReactModal__Overlay {
 		margin: 15px;
-		width: calc(100% - 30px);
+		width: calc(100% - 55px);
 	}
 	
 	.modal__heading {
