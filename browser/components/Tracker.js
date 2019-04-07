@@ -20,10 +20,16 @@ const Tracker = class Tracker extends Component {
 			mouthMessage: false
 		}
 		this.canvas = React.createRef()
+		this.video = React.createRef()
 		this.setDataToState = this.setDataToState.bind(this)
 		this.displayMessage = this.displayMessage.bind(this)
 	}
 	componentDidMount(){
+		navigator.mediaDevices
+			.getUserMedia({video: {facingMode: 'user'}})
+			.then((stream) => this.video.current.srcObject = stream)
+			.catch(() => console.err('Error fetching user media.'))
+
 		const [ faceTracker, faceTask ] = this.initializeTracker('face')
 		this.addEventListener(faceTracker, this.setDataToState, 'face')
 		this.faceTask = faceTask
