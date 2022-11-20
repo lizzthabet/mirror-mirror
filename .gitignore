@@ -48,10 +48,6 @@ typings/
 # Optional eslint cache
 .eslintcache
 
-# Webpack
-bundle.js
-bundle.js.map
-
 # dotenv environment variables file
 .env
 
