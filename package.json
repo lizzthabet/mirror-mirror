@@ -6,7 +6,8 @@
 	"scripts": {
 		"start": "node server/start.js",
 		"start-dev": "webpack -w & nodemon server/start.js",
-		"deploy": "scripts/deploy"
+		"deploy": "scripts/deploy",
+		"build": "webpack -p"
 	},
 	"author": "lizz thabet",
 	"license": "ISC",
